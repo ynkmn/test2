@@ -1,0 +1,24 @@
+import os
+import glob
+import pickle
+import yaml
+from multiprocessing import Pool
+
+def yaml_to_pickle(yaml_path):
+    # YAMLファイルを読み込んでdictに変換
+    with open(yaml_path, 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)  # dict型に変換[5][8]
+    # 出力ファイル名を決定
+    pkl_path = os.path.splitext(yaml_path)[0] + '.pkl'
+    # pickleで保存
+    with open(pkl_path, 'wb') as f:
+        pickle.dump(data, f)  # pickleでバイナリ保存[9]
+    return pkl_path
+
+if __name__ == '__main__':
+    # YAMLファイルのパス一覧を取得
+    yaml_files = sorted(glob.glob('*.yml'))  # 必要に応じてパスを変更
+    # 並列処理でpickle化
+    with Pool() as pool:
+        results = pool.map(yaml_to_pickle, yaml_files)
+    print(f'Pickle化完了: {results}')
