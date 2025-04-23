@@ -1,3 +1,12 @@
+from pathlib import Path
+
+file_list = [r"w\plot\test", r"w\plot2\test", r"w\plot\test1"]
+folders = {Path(f).parent for f in file_list}
+print(folders)  # {WindowsPath('w\\plot'), WindowsPath('w\\plot2')}
+
+
+
+
 import os
 
 def path_partial_match(pattern, target):
