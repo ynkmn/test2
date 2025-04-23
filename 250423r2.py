@@ -1,3 +1,19 @@
+import os
+
+def path_partial_match(pattern, target):
+    # パス区切りをOS標準に統一
+    pattern_norm = pattern.replace('/', os.sep).replace('\\', os.sep)
+    target_norm = target.replace('/', os.sep).replace('\\', os.sep)
+    return pattern_norm in target_norm
+
+# 例
+print(path_partial_match('w/plot', r'w\plot\test'))  # True
+
+
+
+
+
+
 現在のコードは`process_a*`で複数のフォルダをチェックできますが、他のプロセスフォルダでは特定のパス構造しか対応していませんね。`plot1/def_*.dat`や`plot2/def_*.dat`のように、サブフォルダ内の同じパターンのファイルをチェックできるように拡張しましょう。
 
 まず、コードの主な変更点を説明します：
